@@ -14,9 +14,9 @@ def round(moves, move):
     cp = random.choice(list(moves.keys()))
     game_check = u - cp
     if game_check in [-1, 2]:
-        return True
+        return cp, True
     elif game_check in [-2, 1]:
-        return False
+        return cp, False
 
 
 def game():
@@ -36,10 +36,10 @@ def game():
 @app.route('/index')
 def index():
 
-    return render_template('index.html', title="Rock paper Scissors", moves=moves)
+    return render_template('index.html', title="Rock Paper Scissors", moves=moves)
 
 
 @app.route('/moves/<move>')
 def moves_list(move):
     round_score = round(moves, move)
-    return render_template('moves_list.html', title="Rock paper Scissors", move=move, round_score=round_score)
+    return render_template('moves_list.html', title="Rock Paper Scissors", move=move, round_score=round_score)

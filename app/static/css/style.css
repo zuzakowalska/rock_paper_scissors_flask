@@ -1,0 +1,12 @@
+.container.main {
+  margin-top: 50px;
+}
+h1 {
+  margin-bottom: 50px;
+}
+ul {
+  list-style-type: none;
+}
+li {
+  margin: 15px 0;
+}
