@@ -31,10 +31,9 @@ class Game:
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    game_score = 0
     if request.method == 'POST':
-        game_score = request.form['round_score']
-    else:
-        game_score = 0
+        game_score += int(request.form['round_score'])
     return render_template('index.html', title="Rock Paper Scissors", moves=moves, game_score=game_score)
 
 
