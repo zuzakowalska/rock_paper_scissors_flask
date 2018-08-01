@@ -1,13 +1,16 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="col-md-4">
   <ul>
     {% for move in moves %}
     <li>
-        <a href="moves/{{moves[move]}}"><button type="button" class="btn btn-large btn-block btn-primary">{{moves[move]}}</button></a>
+      <a href="{{moves[move]}}">
+        <button type="button" class="btn btn-large btn-block btn-primary">{{moves[move]}}</button>
+      </a>
     </li>
     {% endfor %}
   </ul>
 </div>
-<div class="col-md-6 col-md-offset-2"><h3 class="text-center">Score: </h3></div>
-  {% endblock %}
+<div class="col-md-6 col-md-offset-2">
+  <h3 class="text-center">Score: {{game_score}}</h3>
+</div>
+{% endblock %}

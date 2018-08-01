@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 from app import app
 import random
 
@@ -22,21 +22,25 @@ class Game:
     def game_check(self):
         self.round_score = self.u - self.cp
         if self.round_score in [-1, 2]:
-            return True
+            return 1
         elif self.round_score in [-2, 1]:
-            return False
+            return -1
         elif self.round_score == 0:
-            return None
+            return 0
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', title="Rock Paper Scissors", moves=moves)
+    if request.method == 'POST':
+        game_score = request.form['round_score']
+    else:
+        game_score = 0
+    return render_template('index.html', title="Rock Paper Scissors", moves=moves, game_score=game_score)
 
 
-@app.route('/moves/<move>')
+@app.route('/<move>')
 def moves_list(move):
     single_game = Game(moves)
     cp = single_game.setup(move).cp_name
-    return render_template('moves_list.html', title="Rock Paper Scissors", move=move, cp=cp)
+    round_score = single_game.game_check()
+    return render_template('moves_list.html', title="Rock Paper Scissors", move=move, cp=cp, round_score=round_score)
