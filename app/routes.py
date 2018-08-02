@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, session
 from app import app
 import random
 
@@ -19,7 +19,7 @@ class Game:
         self.cp_name = self.moves[self.cp]
         return self
 
-    def game_check(self):
+    def round_check(self):
         self.round_score = self.u - self.cp
         if self.round_score in [-1, 2]:
             return 1
@@ -29,11 +29,16 @@ class Game:
             return 0
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.before_request
+def session_management():
+    session.permanent = True
+
+
+@app.route('/')
 def index():
-    game_score = 0
-    if request.method == 'POST':
-        game_score += int(request.form['round_score'])
+    session.clear()
+    session['game_score'] = 0
+    game_score = session['game_score']
     return render_template('index.html', title="Rock Paper Scissors", moves=moves, game_score=game_score)
 
 
@@ -41,5 +46,18 @@ def index():
 def moves_list(move):
     single_game = Game(moves)
     cp = single_game.setup(move).cp_name
-    round_score = single_game.game_check()
+    session['round_score'] = single_game.round_check()
+    round_score = session['round_score']
     return render_template('moves_list.html', title="Rock Paper Scissors", move=move, cp=cp, round_score=round_score)
+
+
+@app.route('/next')
+def next_round():
+    session['game_score'] += session['round_score']
+    game_score = session['game_score']
+    if game_score == 3:
+        return render_template("win.html")
+    elif game_score == -3:
+        return render_template("lose.html")
+    else:
+        return render_template('index.html', title="Rock Paper Scissors", moves=moves, game_score=game_score)
