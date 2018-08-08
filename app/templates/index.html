@@ -1,16 +1,16 @@
 {% extends "base.html" %} {% block content %}
-<div class="col-md-4">
-  <ul>
-    {% for move in moves %}
-    <li>
-      <a href="{{moves[move]}}">
-        <button type="button" class="btn btn-large btn-block btn-primary">{{moves[move]}}</button>
-      </a>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
-<div class="col-md-6 col-md-offset-2">
-  <h3 class="text-center">Score: {{game_score}}</h3>
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-6 text-center">
+    <form action="/game" method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <h3>
+        {{ form.player_name.label }}
+      </h3>
+      <p>
+        {{ form.player_name(size=32, class_="form-control") }}
+      </p>
+      {{ form.submit(class_="btn btn-success btn-lg ") }}
+    </form>
+  </div>
 </div>
 {% endblock %}

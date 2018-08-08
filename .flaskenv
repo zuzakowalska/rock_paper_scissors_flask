@@ -1,0 +1,2 @@
+FLASK_APP=rock_paper_scissors_app
+FLASK_ENV=development
