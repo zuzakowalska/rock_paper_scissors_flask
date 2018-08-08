@@ -3,9 +3,6 @@
   <h3>You chose: {{move}}</h3>
   <h3>Computer chose: {{cp}}</h3>
   <h4>Score: {{round_score}}</h4>
-  <form action="/" method="POST">
-    <input type="hidden" value="{{round_score}}" name="round_score">
-    <input type="submit" value="Next round">
-  </form>
+  <a href="/game">Next round</a>
 </div>
 {% endblock %}

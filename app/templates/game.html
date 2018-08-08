@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block content %}
+<div class="row">
+  <div class="col-12">
+    <ul>
+      {% for move in moves %}
+      <li>
+        <a href="{{moves[move]}}">
+          <div>
+            <code>
+              <span style="display:block;line-height:8px; font-size: 8px; font-weight:bold;white-space:pre;font-family: monospace;color: black; background: white;">{{ascii_art[move]}}
+              </span>
+            </code>
+          </div>
+          <h5 class="text-center">{{moves[move]}}</h5>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+<div class="col-12">
+  <h3 class="text-center">{{player_name}}'s score: {{game_score}}</h3>
+</div>
+{% endblock %}

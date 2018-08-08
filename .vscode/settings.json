@@ -1,4 +1,7 @@
 {
   "python.pythonPath": "${workspaceFolder}/venv/bin/python",
   "editor.formatOnSave": true,
+  "files.exclude": {
+    "ascii": true
+  }
 }
