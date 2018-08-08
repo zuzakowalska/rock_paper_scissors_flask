@@ -1,4 +1,4 @@
-from flask import render_template, session
+from flask import render_template, session, request
 from app import app
 from app.game import Game
 from app.form import PlayerName
@@ -32,6 +32,8 @@ def moves_list(move):
 
 @app.route('/game', methods=['GET', 'POST'])
 def game_round():
+    if request.method == 'POST':
+        player_name = request.form.get('player_name')
     session['game_score'] += session['round_score']
     game_score = session['game_score']
     if game_score == 3:
@@ -39,4 +41,4 @@ def game_round():
     elif game_score == -3:
         return render_template("lose.html")
     else:
-        return render_template('game.html', title="Rock Paper Scissors", moves=moves, game_score=game_score, ascii_art=ascii_art)
+        return render_template('game.html', title="Rock Paper Scissors", moves=moves, game_score=game_score, ascii_art=ascii_art, player_name=player_name)
