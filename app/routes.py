@@ -1,6 +1,6 @@
 from flask import render_template, request, session
 from app import app
-from Game import Game
+from app.Game import Game
 
 MOVES = {1: "rock", 2: "scissors", 3: "paper"}
 
