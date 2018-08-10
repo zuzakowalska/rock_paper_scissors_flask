@@ -4,5 +4,5 @@ from wtforms.validators import DataRequired
 
 
 class PlayerName(FlaskForm):
-    player_name = StringField('Name:', validators=[DataRequired()])
+    name = StringField('Name:', validators=[DataRequired()])
     submit = SubmitField('Start')

@@ -4,10 +4,10 @@
     <form action="" method="post">
       {{ form.hidden_tag() }}
       <h3>
-        {{ form.player_name.label }}
+        {{ form.name.label }}
       </h3>
       <p>
-        {{ form.player_name(size=32, class_="form-control") }}
+        {{ form.name(size=32, class_="form-control") }}
       </p>
       {{ form.submit(class_="btn btn-success btn-lg ") }}
     </form>

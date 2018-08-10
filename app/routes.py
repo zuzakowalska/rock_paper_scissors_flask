@@ -17,8 +17,7 @@ def session_management():
 def index():
     form = PlayerName()
     if form.validate_on_submit():
-        new_player = GameData(
-            player_name=form.player_name.data, player_score=0)
+        new_player = GameData(name=form.name.data, score=0)
         db.session.add(new_player)
         db.session.commit()
         return redirect('/game')
@@ -28,11 +27,11 @@ def index():
 @app.route('/<move>')
 def moves_list(move):
     player = GameData.query.filter_by(
-        player_name=GameData.player_name).order_by(GameData.id.desc()).first()
+        name=GameData.name).order_by(GameData.id.desc()).first()
     single_game = Game(moves)
     cp = single_game.setup(move).cp_name
     round_score = single_game.round_check()
-    player.player_score = player.player_score + round_score
+    player.score = player.score + round_score
     db.session.commit()
     return render_template('moves_list.html', title="Rock Paper Scissors", move=move, cp=cp, round_score=round_score)
 
@@ -40,12 +39,16 @@ def moves_list(move):
 @app.route('/game', methods=['GET', 'POST'])
 def game_round():
     player = GameData.query.filter_by(
-        player_name=GameData.player_name).order_by(GameData.id.desc()).first()
-    player_name = player.player_name
-    player_score = player.player_score
+        name=GameData.name).order_by(GameData.id.desc()).first()
+    player_name = player.name
+    player_score = player.score
     if player_score == 3:
+        player.win = True
+        db.session.commit()
         return render_template('win.html', title="Rock Paper Scissors", player_name=player_name)
     elif player_score == -3:
+        player.win = False
+        db.session.commit()
         return render_template('lose.html', title="Rock Paper Scissors", player_name=player_name)
     else:
         return render_template('game.html', title="Rock Paper Scissors", moves=moves, player_score=player_score, ascii_art=ascii_art, player_name=player_name)
