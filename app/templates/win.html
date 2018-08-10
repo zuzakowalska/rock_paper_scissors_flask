@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 <div class="container text-center">
-  <h1>You won!</h1>
-  <a href="/">New game</a>
+  <h1>You won, {{player_name}}!</h1>
+  <a href="/new-game">New game</a>
 </div>
 {% endblock %}
